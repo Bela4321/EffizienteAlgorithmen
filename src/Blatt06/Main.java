@@ -31,6 +31,7 @@ public class Main {
             System.out.println(d + " (" + time + "ms)");
 
             System.out.println();
+            //Ergebnisse in unserem Abgabe PDF
         }
     }
 }
