@@ -1,0 +1,13 @@
+Das beschriebene Problem ist das Max flow Problem mit Knoten- und Kantenlimits.
+Ein Algo der dieses Problem löst ist der aus der Vorlesung bekannte Ford Fulkerson Algorithmus,
+nur dass wir den graph vorher aufbereiten. So wird jeder Knoten, dewr ein Limit besitzt durch zwei Knoten ersetzt.
+Der erste ist der input Knoten, der zweite der output Knoten. Die Kante zwischen diesen beiden Knoten hat das Knotenlimit als Kapazität.
+Die eingehenden Kanten des ursprünglichen Knotens werden auf den input Knoten umgeleitet, die ausgehenden Kanten auf den output Knoten.
+Dann liefert der Ford Fulkerson Algorithmus die Lösung für das Max flow Problem mit Knoten- und Kantenlimits.
+Für die beschribene Aufgavbe muss man noch ein paar Feinheiten beachten. So muss man beispielsweise eine neue Quelle erstellen und diese
+mit den Kanten ohne Kapazitätslimit mit den Lagern verbinden. Auch die Werkstatt muss noch mit einer Senke verbunden werden (ebenfalls unbeschränkte Kapazität).
+Die Lösung Anzahl der runden lässt sich nun mit dem Max flow des Graphen berechnen und die Geschenkeaufteilung kann am Flow der Kanten von Quelle zu den LAgern abgelesen werden.
+
+
+Im worst Case hat jeder Knoten eine Kapazität, also wird die Anzahl der Knoten verdoppelt(und pro Knoten eine Kante hinzugefügt. Damit ergibt sich nach Ford Fulkerson Laufzeit:
+O(f*(n+m)) ,wobei f die maximale Flussmenge ist und n die Anzahl der Knoten und m die Anzahl der Kanten ist.

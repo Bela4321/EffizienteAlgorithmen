@@ -12,5 +12,8 @@ public class Main {
         MaxFlowOpenAI.calcOptimalDistribution(file);
         //check if same # cycles without L2
         MaxFlowOpenAI.comparewithoutL2(file);
+        //find unusedPipes
+        MaxFlowOpenAI graph = MaxFlowOpenAI.maxFlow(file, false);
+        MaxFlowOpenAI.findUnusedPipes(graph);
     }
 }

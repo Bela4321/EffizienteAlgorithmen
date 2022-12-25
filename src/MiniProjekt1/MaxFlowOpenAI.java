@@ -2,11 +2,18 @@ package MiniProjekt1;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.text.ParseException;
 import java.util.*;
 
 public class MaxFlowOpenAI {
+    //settings
+    static List<String> lager = List.of(new String[]{"L1", "L2", "L3", "L4", "L5"});
+    static String lagerToCheckWithout = "L2";
+
+    static String[] zentrale = {"Z"};
+
+
     // Number of vertices in the graph
     private int numVertices;
     // Graph represented as an adjacency list
@@ -15,6 +22,7 @@ public class MaxFlowOpenAI {
     HashMap<String, Integer> nameId;
     //max flow
     public int maxFlow = -1;
+
 
     // Constructor
     public MaxFlowOpenAI(int numVertices) {
@@ -116,7 +124,7 @@ public class MaxFlowOpenAI {
             BufferedReader br = new BufferedReader(new FileReader(file));
             String line;
             while ((line = br.readLine()) != null) {
-                table.add(line.split(";"));
+                table.add(line.split("\s*;\s*"));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -127,11 +135,14 @@ public class MaxFlowOpenAI {
         HashMap<String, Integer> capacity = new HashMap<String, Integer>();
 
         //Lager
-        String[] lager = {"L1","L2","L3","L4","L5"};
+        List<String> lager = new ArrayList(MaxFlowOpenAI.lager);
         if (ignoreL2){
-            lager = new String[]{"L1","L3","L4","L5"};
+            for (int i = 0; i < lager.size()-1; i++) {
+                if (lager.get(i).equals(lagerToCheckWithout)) {
+                    lager.remove(i--);
+                }
+            }
         }
-        String[] zentrale = {"Z"};
         int id = 2;
 
         //add vertices and check capacity
@@ -144,10 +155,15 @@ public class MaxFlowOpenAI {
             }
             String[] parts = row[row.length - 1].split(" ");
             if (parts[0].equals("Kapazitaet:")) {
-                int capacityValue = Integer.parseInt(parts[1]);
-                capacity.put(row[0], capacityValue);
-                nameId.put(row[0], id);
-                id = id + 2;
+                    try{
+                        int capacityValue = Integer.parseInt(parts[1]);
+                        capacity.put(row[0], capacityValue);
+                        nameId.put(row[0], id);
+                        id = id + 2;
+                    } catch (Exception ignored){
+                        nameId.put(row[0], id);
+                        id++;
+                    }
             } else {
                 nameId.put(row[0], id);
                 id++;
@@ -178,8 +194,10 @@ public class MaxFlowOpenAI {
                     start++;
                 }
                 int end = nameId.get(table.get(0)[i]);
-                int capacityValue = Integer.parseInt(row[i]);
-                graph.addEdge(start, end, capacityValue);
+                try {
+                    int capacityValue = Integer.parseInt(row[i]);
+                    graph.addEdge(start, end, capacityValue);
+                } catch (Exception ignored) {}
             }
         }
         //add source and sink
@@ -247,17 +265,28 @@ public class MaxFlowOpenAI {
         }
     }
 
-
-
-    public static void main(String[] args) {
-        File file = new File("Data/Miniprojekt/Roehrentransportsystem.csv");
-        MaxFlowOpenAI g = maxFlow(file,false);
-        for (String lager: new String[]{"L1","L2","L3","L4","L5"}){
-            for (Edge edge : g.adjacencyList.get(0)){
-                if (edge.to == g.nameId.get(lager)){
-                    System.out.println("Lager " + lager + " hat " + edge.flow + " Pakete");
+    public static void findUnusedPipes(MaxFlowOpenAI graph){
+        System.out.println("Unbenutzte Rohre:");
+        for (int i = 0; i < graph.adjacencyList.size(); i++) {
+            for (Edge edge : graph.adjacencyList.get(i)){
+                if (edge.flow == 0&&edge.capacity!=0&&edge.from!=0&&edge.to!=1){
+                    System.out.println("Rohr von " + graph.reverseNameId(edge.from) + " nach " + graph.reverseNameId(edge.to));
                 }
             }
         }
+    }
+
+    private String reverseNameId(int id){
+        for (String key : nameId.keySet()){
+            if (nameId.get(key) == id){
+                return key;
+            }
+        }
+        for (String key : nameId.keySet()){
+            if (nameId.get(key) == id-1){
+                return key;
+            }
+        }
+        return null;
     }
 }
