@@ -4,7 +4,7 @@ package MiniProjekt1;
 import java.io.File;
 
 public class Main {
-    //Config here
+
     static File file = new File("Data/Miniprojekt/Roehrentransportsystem.csv");
 
     public static void main(String[] args) {
