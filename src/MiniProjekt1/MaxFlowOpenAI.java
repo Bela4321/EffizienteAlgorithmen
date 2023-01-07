@@ -8,7 +8,7 @@ import java.util.*;
 
 public class MaxFlowOpenAI {
     //settings
-    static List<String> lager = List.of(new String[]{"L1", "L2", "L3", "L4", "L5"});
+    static List<String> lager = List.of(new String[]{ "L1", "L2", "L3", "L4", "L5" });
     static String lagerToCheckWithout = "L2";
 
     static String[] zentrale = {"Z"};
@@ -229,11 +229,11 @@ public class MaxFlowOpenAI {
         for (String lager: new String[]{"L1","L2","L3","L4","L5"}){
             for (Edge edge : graph.adjacencyList.get(0)){
                 if (edge.to == graph.nameId.get(lager)){
+                    System.out.println("Lager " + lager + " bekommt " + (int) Math.min(edge.flow*neededCycles,presentsLeft) + " Pakete");
+                    presentsLeft -= edge.flow*neededCycles;
                     if (presentsLeft<0){
                         presentsLeft=0;
                     }
-                    System.out.println("Lager " + lager + " bekommt " + (int) Math.min(edge.flow*neededCycles,presentsLeft) + " Pakete");
-                    presentsLeft -= edge.flow*neededCycles;
                 }
             }
         }
@@ -255,18 +255,18 @@ public class MaxFlowOpenAI {
         for (String lager: new String[]{"L1","L3","L4","L5"}){
             for (Edge edge : graph2.adjacencyList.get(0)){
                 if (edge.to == graph2.nameId.get(lager)){
+                    System.out.println("Lager " + lager + " bekommt " + (int) Math.min(edge.flow*neededCycles2,presentsLeft) + " Pakete");
+                    presentsLeft -= edge.flow*neededCycles2;
                     if (presentsLeft<0){
                         presentsLeft=0;
                     }
-                    System.out.println("Lager " + lager + " bekommt " + (int) Math.min(edge.flow*neededCycles2,presentsLeft) + " Pakete");
-                    presentsLeft -= edge.flow*neededCycles2;
                 }
             }
         }
     }
 
     public static void findUnusedPipes(MaxFlowOpenAI graph){
-        System.out.println("Unbenutzte Rohre:");
+        System.out.println("Unbenutzte Rohren:");
         for (int i = 0; i < graph.adjacencyList.size(); i++) {
             for (Edge edge : graph.adjacencyList.get(i)){
                 if (edge.flow == 0&&edge.capacity!=0&&edge.from!=0&&edge.to!=1){
@@ -276,6 +276,8 @@ public class MaxFlowOpenAI {
         }
     }
 
+
+    //second for loop because of possible node splitting, when with node capacity
     private String reverseNameId(int id){
         for (String key : nameId.keySet()){
             if (nameId.get(key) == id){

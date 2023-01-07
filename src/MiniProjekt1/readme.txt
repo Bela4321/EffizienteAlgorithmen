@@ -16,7 +16,7 @@ Compares the Solution with and without using the L2 storage. Prints findings in 
 You can change the storage to be tested without by changing the "lagerToCheckWithout" variable in MaxFlowOpenAI.
 
 maxFlow: takes in CSV file with above format and returns a MaxFlowOpenAI object. This is the Graph object after the max flow calculations.
-You can boolean select, if you want to compute that with or witout "L2" (or other) storage.
+You can boolean select, if you want to compute that with or without "L2" (or other) storage.
 
 findUnusedPipes: Takes in a MaxFlowOpenAI object and prints the unused pipes to the console.
 that is Pipes that have a flow of 0 and also a Capacity greater than 0 (we consider pipes with capacity 0 to not exist anyway).
