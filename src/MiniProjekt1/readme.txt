@@ -9,14 +9,12 @@ Algo looks for the keyword "Kapazitaet: " followed by a number, else there is no
 Methods:
 MaxFlowOpenAI has the following static methods:
 calcOptimalDistribution: Takes in a CSV file of the listed above format and prints
-the optimal distribution of presents to the console. The list of nodes to be considered Lager and the Zentrale is stored as a static fields in MaxFlowOpenAI and can be changed.
+the optimal distribution of presents to the console. The list of nodes to be considered storage and the Zentrale is stored as a static fields in MaxFlowOpenAI and can be changed.
 
 comparewithoutL2:
 Compares the Solution with and without using the L2 storage. Prints findings in console.
 You can change the storage to be tested without by changing the "lagerToCheckWithout" variable in MaxFlowOpenAI.
 
-maxFlow: takes in CSV file with above format and returns a MaxFlowOpenAI object. This is the Graph object after the max flow calculations.
-You can boolean select, if you want to compute that with or without "L2" (or other) storage.
 
-findUnusedPipes: Takes in a MaxFlowOpenAI object and prints the unused pipes to the console.
-that is Pipes that have a flow of 0 and also a Capacity greater than 0 (we consider pipes with capacity 0 to not exist anyway).
+findUnusedPipes: Takes in a csv file in above format (and a boolean wether to ignore some Storage and prints the unused pipes to the console.
+I.e. the Pipes that have a flow of 0 and also a Capacity greater than 0 (we consider pipes with capacity 0 to not exist anyway).

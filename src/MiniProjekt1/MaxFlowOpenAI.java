@@ -117,7 +117,7 @@ public class MaxFlowOpenAI {
     }
 
     // Test the Ford Fulkerson algorithm
-    public static MaxFlowOpenAI maxFlow(File file, boolean ignoreL2) {
+    private static MaxFlowOpenAI maxFlow(File file, boolean ignoreL2) {
         //read csv file to table
         List<String[]> table = new ArrayList<>();
         try {
