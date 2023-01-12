@@ -265,7 +265,9 @@ public class MaxFlowOpenAI {
         }
     }
 
-    public static void findUnusedPipes(MaxFlowOpenAI graph){
+    public static void findUnusedPipes(File file, boolean ignoreL2){
+
+        MaxFlowOpenAI graph = MaxFlowOpenAI.maxFlow(file, ignoreL2);
         System.out.println("Unbenutzte Rohren:");
         for (int i = 0; i < graph.adjacencyList.size(); i++) {
             for (Edge edge : graph.adjacencyList.get(i)){

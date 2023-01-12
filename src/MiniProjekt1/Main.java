@@ -15,12 +15,10 @@ public class Main {
 
         //find unusedPipes with L2
         System.out.println("Unused Pipes with L2:");
-        MaxFlowOpenAI graph1 = MaxFlowOpenAI.maxFlow(file, false);
-        MaxFlowOpenAI.findUnusedPipes(graph1);
+        MaxFlowOpenAI.findUnusedPipes(file, false);
 
         //find unusedPipes without L2
         System.out.println("Unused Pipes without L2:");
-        MaxFlowOpenAI graph2 = MaxFlowOpenAI.maxFlow(file, true);
-        MaxFlowOpenAI.findUnusedPipes(graph2);
+        MaxFlowOpenAI.findUnusedPipes(file, true);
     }
 }
